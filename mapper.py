@@ -3,12 +3,6 @@
 import sys
 import re
 
-regex_street = re.compile(r"\w+")
-
-COL_ON_STREET_NAME = 6
-COL_CROSS_STREET_NAME = 7
-COL_OFF_STREET_NAME = 8
-
 OUTPUT_SIZE = 10
 OUTPUT_FORMAT = "{}\t" * (OUTPUT_SIZE - 1) + "{}"
 
