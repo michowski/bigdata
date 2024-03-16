@@ -1,23 +1,75 @@
 #!/usr/bin/env python3
 
 import sys
+from typing import Type
 
-current_install_year = None
-current_install_dockcount = 0
-current_install_count = 0
+
+class AccidentStats:
+    def __init__(self):
+        self.killed = 0
+        self.injured = 0
+        self.pedestrians = 0
+        self.cyclists = 0
+        self.motorists = 0
+
+    def add(self, stats):
+        self.killed += stats.killed
+        self.injured += stats.injured
+        self.pedestrians += stats.pedestrians
+        self.cyclists += stats.cyclists
+        self.motorists += stats.motorists
+
+
+aggregated_stats: dict[(str, str), AccidentStats] = {}
+
 
 for line in sys.stdin:
-    install_year, install_dockcount = line.strip().split("\t")
-    install_dockcount = int(install_dockcount.strip())
-    if current_install_year == install_year:
-        current_install_dockcount += install_dockcount
-        current_install_count += 1
-    else:
-        if current_install_year:
-            print(f"{current_install_year}\t{current_install_dockcount/current_install_count}")
-        current_install_year = install_year
-        current_install_dockcount = install_dockcount
-        current_install_count = 1
+    values = line.strip().split("\t")
 
-if current_install_year == install_year:
-    print(f"{current_install_year}\t{current_install_dockcount/current_install_count}")
+    zip_code = values[0]
+    streets = values[1:4]
+    affected_people = values[4:10]
+    affected_people = map(int, affected_people)
+    (
+        pedestrians_injured,
+        pedestrians_killed,
+        cyclists_injured,
+        cyclists_killed,
+        motorists_injured,
+        motorists_killed,
+    ) = affected_people
+
+    stats = AccidentStats()
+    stats.killed = sum(
+        [
+            pedestrians_killed,
+            cyclists_killed,
+            motorists_killed,
+        ]
+    )
+    stats.injured = sum(
+        [
+            pedestrians_injured,
+            cyclists_injured,
+            motorists_injured,
+        ]
+    )
+    stats.pedestrians = pedestrians_injured + pedestrians_killed
+    stats.cyclists = cyclists_injured + cyclists_killed
+    stats.motorists = motorists_injured + motorists_killed
+
+    for street in filter(None, streets):
+        key = (zip_code, street)
+
+        if not key in aggregated_stats:
+            aggregated_stats[key] = stats
+        else:
+            aggregated_stats[key].add(stats)
+
+
+for key, stats in aggregated_stats.items():
+    (zip_code, street) = key
+
+    print(
+        f"{zip_code}\t{street}\t{stats.killed}\t{stats.injured}\t{stats.pedestrians}\t{stats.cyclists}\t{stats.motorists}"
+    )
