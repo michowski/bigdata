@@ -40,20 +40,10 @@ for line in sys.stdin:
     ) = affected_people
 
     stats = AccidentStats()
-    stats.killed = sum(
-        [
-            pedestrians_killed,
-            cyclists_killed,
-            motorists_killed,
-        ]
-    )
-    stats.injured = sum(
-        [
-            pedestrians_injured,
-            cyclists_injured,
-            motorists_injured,
-        ]
-    )
+
+    stats.killed = pedestrians_killed + cyclists_killed + motorists_killed
+    stats.injured = pedestrians_injured + cyclists_injured + motorists_injured
+
     stats.pedestrians = pedestrians_injured + pedestrians_killed
     stats.cyclists = cyclists_injured + cyclists_killed
     stats.motorists = motorists_injured + motorists_killed
