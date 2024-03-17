@@ -20,4 +20,4 @@ for line in sys.stdin:
     count = values[3]
     zone = values[7]
 
-    print(f"{month}\t{zone}\t{count}")
+    print(f"{month},{zone}\t{count}")

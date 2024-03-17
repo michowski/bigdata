@@ -2,20 +2,16 @@
 
 import sys
 
-last_key: tuple[str, str] = None
+last_key = None
 current_count = 0
 
 
 def print_current_count():
-    (month, zone) = last_key
-    print(f"{month}\t{zone}\t{current_count}")
+    print(f"{last_key}\t{current_count}")
 
 
 for line in sys.stdin:
-    values = line.strip().split("\t")
-    (month, zone, count) = values
-
-    key = (month, zone)
+    key, count = line.strip().split("\t")
 
     if last_key != key:
         if last_key != None:
@@ -26,5 +22,5 @@ for line in sys.stdin:
 
     current_count += int(count)
 
-
-print_current_count()
+if last_key != None:
+    print_current_count()
