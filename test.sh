@@ -1,1 +1,1 @@
-./mapper.py < input/datasource1/part-00000 | ./reducer.py
+./mapper.py < input/datasource1/part-00000 | sort -t $'\t' -k1,1 -k2,2 | ./reducer.py

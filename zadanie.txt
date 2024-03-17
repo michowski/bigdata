@@ -1,23 +1,15 @@
-Działając na zbiorze datasource1 należy dla każdej ulicy w zakresie należącym do określonej strefy pocztowej (w
-przypadku kiedy dla tej samej ulicy istnieją przypadki opisane różnymi strefami pocztowymi, należy je policzyć
-oddzielnie) wyznaczyć liczbę poszkodowanych z podziałem na typ poszkodowanych (pieszych, rowerzystów i
-kierowców) oraz charakter obrażeń (ranni, zabici). Wyniki mają być ograniczone tylko do wypadków mających
-miejsce po 2012 roku i opisanych kodem pocztowym.
+Program MapReduce (2)
+Działając na zbiorze datasource1 należy dla każdego miesiąca (w określonym roku) wyznaczyć liczbę pasażerów,
+którzy wsiedli do taksówek w poszczególnych strefach (strefa włączenia taksometru) i opłacili swój przejazd gotówką.
 W wynikowym zbiorze (3) powinny znaleźć się atrybuty:
-• ulica,
-• nr strefy pocztowej,
-• typ poszkodowanych,
-• charakter obrażeń,
-• liczba poszkodowanych
-Uwaga: Każde zdarzenie może być opisane trzema różnymi ulicami. W zależności od tego ile ulic zostało określonych,
-dane zdarzenie należy zaliczyć na konto każdej z nich.
+• miesiąc,
+• strefa rozpoczęcia podróży oraz
+• liczba pasażerów, jaka rozpoczęła swoją podróż w podanej strefie w podanym miesiącu
 Program Hive (5)
-Działając na wyniku zadania MapReduce oraz zbiorze danych datasource4 należy dla każdego typu
-poszkodowanych wyznaczyć trzy ulice leżące na terenie Manhatanu, dla których suma poszkodowanych
-(zabici+ranni) jest największa.
+Działając na wyniku zadania MapReduce oraz zbiorze danych datasource4 należy dla każdego miesiąca wyznaczyć
+trzy dzielnice (Borough), w których wsiadło najwięcej pasażerów.
 Wynik (6) powinien zawierać następujące atrybuty:
-• street – ulica
-• person_type – typ poszkodowanych
-• killed – liczba zabitych
-• injured – liczba rannych
+• month – miesiąc
+• borough – dzielnica
+• passengers – liczba pasażerów jaka rozpoczęła swoją podróż w podanej dzielnicy w podanym miesiącu
 Cyfry w nawiasach odnoszą się do cyfr wykorzystanych na graficznej reprezentacji projektu – patrz opis.
